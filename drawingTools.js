@@ -70,20 +70,19 @@ function bresenhamCircle(buffer, context, xc, yc, r, z, innerColor) {
 function drawSphere(buffer, context, xc, yc, r, innerColor) {
   const genSphereCoords = (xc, yc, r) => {
     let coords = [];
-  let inc = 0.02; // 0.01
+    let inc = 0.02; // 0.01
 
-  for(let i = - Math.PI / 2; i <= Math.PI / 2; i += inc){
-      for(let j = - Math.PI; j <= Math.PI; j += inc){
-          let x = r * Math.cos(i) * Math.cos(j) + xc;
-          let y = r * Math.cos(i) * Math.sin(j) + yc;
-          let z = r * Math.sin(i);
-
-          coords.push({x: parseInt(x), y: parseInt(y), z: parseInt(z)});
+    for (let i = -Math.PI / 2; i <= Math.PI / 2; i += inc) {
+      let z = r * Math.sin(i);
+      for (let j = -Math.PI; j <= Math.PI; j += inc) {
+        let x = r * Math.cos(i) * Math.cos(j) + xc;
+        let y = r * Math.cos(i) * Math.sin(j) + yc;
+        coords.push({ x: parseInt(x), y: parseInt(y), z: parseInt(z) });
       }
-  }
+    }
 
-  return coords;
-  }
+    return coords;
+  };
 
   let sphereCoords = genSphereCoords(xc, yc, r);
   for (let i = 0; i < sphereCoords.length; i++) {
