@@ -7,35 +7,44 @@
     <title>Z-Buffer and Ilumination</title>
 
     <style type="text/css">
-    * {
-        font-family: 'Courier New', Courier, monospace;
-    }
+      * {
+        font-family: "Courier New", Courier, monospace;
+      }
       body {
         margin: 0;
         padding: 0;
       }
-      .h2-center{
-          margin: 30px 0 0 0;
-          text-align: center;
+      .h2-center {
+        margin: 30px 0 0 0;
+        text-align: center;
       }
-      .h4-center{
-          margin: 5px 0 5px 0;
-          text-align: center;
+      .h4-center {
+        margin: 5px 0 5px 0;
+        text-align: center;
       }
+
       canvas {
+
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top:0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin:auto;
+
         border: 1px solid black;
+        -moz-transform: scaleY(-1);
+        -o-transform: scaleY(-1);
+        -webkit-transform: scaleY(-1);
+        transform: scaleY(-1);
       }
     </style>
   </head>
   <body>
-      <h2 class="h2-center">Z-Buffer com Iluminação</h2>
-      <h4 class="h4-center">Coded by: André H. G. Dias</h4>
+    <h2 class="h2-center">Z-Buffer com Iluminação</h2>
+    <h4 class="h4-center">Coded by: André H. G. Dias</h4>
 
-    <canvas></canvas>
-    <script type="module" src="./canvas.js"></script>
+    <div class="canvas-wrapper"><canvas>Seu navegador não suporta o canvas, atualize para uma nova versão!</canvas></div>
+    <script type="module" src="./sandbox.js"></script>
   </body>
 </html>

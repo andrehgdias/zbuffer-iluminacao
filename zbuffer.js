@@ -3,26 +3,27 @@ if (!Number.MAX_SAFE_INTEGER) {
 }
 
 class zBuffer {
-  constructor(width, height) {
+  constructor(width, height, context, background) {
     this.x = parseInt(width);
     this.y = parseInt(height);
     this.data = new Array(this.x);
-    this.init();
+    this.init(context, background);
   }
 
-  init(initializing = true) {
+  init(context,background, initializing = true) {
     initializing ? console.warn("Initializing zBuffer") : false;
     for (let i = 0; i < this.data.length; i++) {
       let arrayX = new Array(this.y);
 
       for (let j = 0; j < arrayX.length; j++) {
-        let obj = { z: Number.MAX_SAFE_INTEGER, color: "#ffffff" };
+        let obj = { z: Number.MAX_SAFE_INTEGER, color: background };
         arrayX[j] = obj;
       }
 
       this.data[i] = arrayX;
     }
     initializing ? console.info("zBuffer initialized: ", this.data) : false;
+    this.flush(context);
   }
 
   clear() {
@@ -37,9 +38,6 @@ class zBuffer {
   }
 
   addPixel(context, x, y, z, color) {
-    console.warn("Adding pixel: ");
-    console.log("Pixel: ("+ x +"," + y + "," + z + ") with color: " + color);
-    console.log("Pixel stored at buffer: ", this.data[x][y]);
     if (z < this.data[x][y].z){
       this.data[x][y] = {
         z,
@@ -47,7 +45,6 @@ class zBuffer {
       };
       context.fillStyle = color;
       context.fillRect(x, y, 1, 1);
-      console.log("Pixel stored at buffer with a new value: ", this.data[x][y]);
     }
   }
 
