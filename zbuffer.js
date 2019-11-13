@@ -10,7 +10,7 @@ class zBuffer {
     this.init(context, background);
   }
 
-  init(context,background, initializing = true) {
+  init(context, background, initializing = true) {
     initializing ? console.warn("Initializing zBuffer") : false;
     for (let i = 0; i < this.data.length; i++) {
       let arrayX = new Array(this.y);
@@ -38,12 +38,12 @@ class zBuffer {
   }
 
   addPixel(context, x, y, z, color) {
-    if (z < this.data[x][y].z){
+    if (z < this.data[x][y].z) {
       this.data[x][y] = {
         z,
         color
       };
-      context.fillStyle = color;
+      context.fillStyle = `rgb(${color.r}, ${color.g}, ${color.b})`;
       context.fillRect(x, y, 1, 1);
     }
   }

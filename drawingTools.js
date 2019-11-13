@@ -1,3 +1,5 @@
+import { lambertAlgorithm } from "./ilumination.js";
+
 function bresenhamLine(buffer, context, x0, y0, x1, y1, z, innerColor) {
   var dx = Math.abs(x1 - x0);
   var dy = Math.abs(y1 - y0);
@@ -70,7 +72,7 @@ function bresenhamCircle(buffer, context, xc, yc, r, z, innerColor) {
 function drawSphere(buffer, context, xc, yc, r, innerColor) {
   const genSphereCoords = (xc, yc, r) => {
     let coords = [];
-    let inc = 0.02; // 0.01
+    let inc = 0.01; // 0.01
 
     for (let i = -Math.PI / 2; i <= Math.PI / 2; i += inc) {
       let z = r * Math.sin(i);
@@ -84,10 +86,28 @@ function drawSphere(buffer, context, xc, yc, r, innerColor) {
     return coords;
   };
 
+  const calcColor = (rgbObj, coordSup, coordCenter) => {
+    //Parametros = (coordSup, coordCenter, ia, ka, il, kd)
+    let intensity = lambertAlgorithm(coordSup, coordCenter, 0.6, 0.8, 1, 0.3);
+    // console.log(intensity);
+    // if (intensity < 1) {
+      let obj = { r: 0, g: 0, b: 0 };
+      obj.r = rgbObj.r * intensity;
+      obj.g = rgbObj.g * intensity;
+      obj.b = rgbObj.b * intensity;
+      return obj;
+    // } else return rgbObj;
+  };
+
   let sphereCoords = genSphereCoords(xc, yc, r);
+
+  // let color = calcColor(innerColor, sphereCoords[0], { xc, yc });
+  // console.log("Color: ", color)
   for (let i = 0; i < sphereCoords.length; i++) {
     let coords = sphereCoords[i];
-    buffer.addPixel(context, coords.x, coords.y, coords.z, innerColor);
+    let color = calcColor(innerColor, coords, {xc, yc});
+    // console.warn("Color: ", color);
+    buffer.addPixel(context, coords.x, coords.y, coords.z, color);
   }
 }
 
